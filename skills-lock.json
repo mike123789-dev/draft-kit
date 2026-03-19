@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "skills": {
+    "agent-browser": {
+      "source": "mike123789-dev/my-skills",
+      "sourceType": "github",
+      "computedHash": "3c1e3549339c98c44c8c75f676f56ebc0adcd4494ec27b7f1851f7c5a7c2deaf"
+    },
+    "frontend-design": {
+      "source": "mike123789-dev/my-skills",
+      "sourceType": "github",
+      "computedHash": "063a0e6448123cd359ad0044cc46b0e490cc7964d45ef4bb9fd842bd2ffbca67"
+    },
+    "obsidian-bases": {
+      "source": "mike123789-dev/my-skills",
+      "sourceType": "github",
+      "computedHash": "ed0a53502693e56c67575a9958daca9a3a1ac7ba483367f400b4cad9488bfb3c"
+    },
+    "obsidian-markdown": {
+      "source": "mike123789-dev/my-skills",
+      "sourceType": "github",
+      "computedHash": "cacc9058a35ad3fd4985b4c31121bff8202f1337c39808c1326ded6a19a7915f"
+    },
+    "tailwind-design-system": {
+      "source": "mike123789-dev/my-skills",
+      "sourceType": "github",
+      "computedHash": "7b2994df340cabe369b4c0d391d57daa11a2aea150df7d575e78a89679e3eeb0"
+    },
+    "vercel-composition-patterns": {
+      "source": "mike123789-dev/my-skills",
+      "sourceType": "github",
+      "computedHash": "94614590eb8d755279d38baf53f9fb48df06cb260e77e8fb626d24090f2a8c77"
+    },
+    "vercel-react-best-practices": {
+      "source": "mike123789-dev/my-skills",
+      "sourceType": "github",
+      "computedHash": "da4e8167c9e77214b6b3a18c80c3cb6c02f80b12f446fcbd57b97539f3f1fda0"
+    }
+  }
+}
