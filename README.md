@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DraftKit Monorepo (Skeleton)
 
-## Getting Started
+DraftKit을 실제 제품 코드와 예제 앱으로 분리한 최소 뼈대입니다.
 
-First, run the development server:
+## Structure
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```text
+apps/
+  playground-next/     # example 앱 (Next.js)
+packages/
+  draftkit-core/       # 제품 핵심 로직 (생성/검증/직렬화)
+  draftkit-react/      # React 렌더러/셸
+  draftkit-next/       # Next 연결용 헬퍼
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Quick Start
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+위 명령은 `@draftkit/playground-next`를 실행합니다.
 
-## Learn More
+## Commands
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm dev             # playground 앱 실행
+pnpm build           # 워크스페이스 전체 빌드
+pnpm typecheck       # 워크스페이스 전체 타입체크
+pnpm lint            # 워크스페이스 전체 린트
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Current MVP Skeleton
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Prompt 입력
+- Mock draft 생성 (`@draftkit/core`)
+- Registry 기반 검증
+- Overlay preview 렌더링 (`@draftkit/react`)
+- JSX 코드 복사
+- PNG export 버튼 자리(TODO)
 
-## Deploy on Vercel
+## Next Steps
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Storybook registry 추출기를 `@draftkit/core`에 추가
+2. mock generator를 실제 LLM generation으로 교체
+3. PNG export 파이프라인 구현

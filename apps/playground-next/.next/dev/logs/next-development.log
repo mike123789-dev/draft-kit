@@ -1,0 +1,5 @@
+{"timestamp":"00:00:00.524","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:01:32.537","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
+{"timestamp":"00:01:48.311","source":"Browser","level":"ERROR","message":"unhandledRejection: NotAllowedError: Failed to execute 'writeText' on 'Clipboard': Write permission denied."}
+{"timestamp":"00:01:48.312","source":"Server","level":"ERROR","message":"[browser] \"\\u001b[31m⨯ unhandledRejection: NotAllowedError: Failed to execute 'writeText' on 'Clipboard': Write permission denied.\\u001b[39m\\n\\u001b[31mNotAllowedError: Failed to execute 'writeText' on 'Clipboard': Write permission denied.\\u001b[39m\""}
+{"timestamp":"00:01:48.312","source":"Browser","level":"ERROR","message":"\u001b[31m⨯ unhandledRejection: NotAllowedError: Failed to execute 'writeText' on 'Clipboard': Write permission denied.\u001b[39m\n\u001b[31mNotAllowedError: Failed to execute 'writeText' on 'Clipboard': Write permission denied.\u001b[39m"}
