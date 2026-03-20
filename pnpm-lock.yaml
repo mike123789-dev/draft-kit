@@ -8,7 +8,7 @@ importers:
 
   .: {}
 
-  apps/playground-next:
+  examples/playground-next:
     dependencies:
       '@draftkit/core':
         specifier: workspace:*
