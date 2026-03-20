@@ -1,0 +1,60 @@
+branching:
+  feature_prefix: feature/
+  integration: develop
+  main: main
+commands:
+  build: pnpm build
+  lint: pnpm lint
+  package_manager: pnpm
+  "test:e2e": "pnpm test:e2e"
+  "test:unit": pnpm test
+  typecheck: pnpm typecheck
+compound:
+  path: docs/specs/compound.md
+  recent_limit: 8
+constitution:
+  path: docs/specs/constitution.md
+gates:
+  build:
+    - build
+  custom: []
+  verify:
+    - lint
+    - typecheck
+    - "test:unit"
+language: en
+master_spec:
+  id_prefix: MS-
+  path: docs/specs/master-spec.md
+specs_dir: docs/specs
+state_transitions:
+  Blocked:
+    - Ready
+    - In Progress
+    - Verifying
+  Done:
+    - Done
+  Draft:
+    - Ready
+    - In Progress
+    - Blocked
+  In Progress:
+    - Verifying
+    - Done
+    - Blocked
+    - Ready
+  Ready:
+    - In Progress
+    - Blocked
+  Verifying:
+    - Done
+    - In Progress
+    - Blocked
+states:
+  - Draft
+  - Ready
+  - In Progress
+  - Verifying
+  - Done
+  - Blocked
+templates_dir: .specflow/templates
