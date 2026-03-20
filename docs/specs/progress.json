@@ -1,9 +1,54 @@
 {
-  "generated_at": "2026-03-20T02:03:46.969333+00:00",
-  "total_features": 0,
+  "generated_at": "2026-03-20T06:12:28.251074+00:00",
+  "total_features": 4,
   "blocked_tasks": 0,
   "features_with_nc": 0,
-  "features": [],
+  "features": [
+    {
+      "featureId": "F-001",
+      "title": "Built-in Layout System",
+      "status": "Done",
+      "total": 3,
+      "done": 3,
+      "inProgress": 0,
+      "blocked": 0,
+      "percent": 100,
+      "lastUpdated": "2026-03-20"
+    },
+    {
+      "featureId": "F-002",
+      "title": "AST Validation and Restricted Rendering Engine",
+      "status": "Done",
+      "total": 5,
+      "done": 5,
+      "inProgress": 0,
+      "blocked": 0,
+      "percent": 100,
+      "lastUpdated": "2026-03-20"
+    },
+    {
+      "featureId": "F-003",
+      "title": "Playground Live Editor",
+      "status": "Done",
+      "total": 3,
+      "done": 3,
+      "inProgress": 0,
+      "blocked": 0,
+      "percent": 100,
+      "lastUpdated": "2026-03-20"
+    },
+    {
+      "featureId": "F-004",
+      "title": "Export: Copy JSX + Single-File Component",
+      "status": "Done",
+      "total": 4,
+      "done": 4,
+      "inProgress": 0,
+      "blocked": 0,
+      "percent": 100,
+      "lastUpdated": "2026-03-20"
+    }
+  ],
   "blocked_task_details": [],
   "needs_clarification": [],
   "progress_md_path": "docs/specs/progress.md",

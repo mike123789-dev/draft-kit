@@ -2,7 +2,7 @@ import { parse } from "@babel/parser";
 import React from "react";
 import { LivePreview, LiveProvider } from "react-live";
 
-import { LAYOUT_PRIMITIVES } from "@draftkit/core";
+import { LAYOUT_PRIMITIVES, type ComponentRegistry } from "@draftkit/core";
 import * as Primitives from "./primitives";
 
 // ---------------------------------------------------------------------------
@@ -15,8 +15,18 @@ for (const name of LAYOUT_PRIMITIVES) {
   if (comp) PRIMITIVE_SCOPE[name] = comp;
 }
 
-export function buildScope(additionalComponents?: Record<string, unknown>): Record<string, unknown> {
+function buildScope(additionalComponents?: Record<string, unknown>): Record<string, unknown> {
   return { ...PRIMITIVE_SCOPE, ...additionalComponents };
+}
+
+export function buildScopeFromRegistry(registry: ComponentRegistry): Record<string, unknown> {
+  const fromRegistry: Record<string, unknown> = {};
+  for (const spec of Object.values(registry)) {
+    if (spec.name && spec.component != null) {
+      fromRegistry[spec.name] = spec.component;
+    }
+  }
+  return { ...PRIMITIVE_SCOPE, ...fromRegistry };
 }
 
 // ---------------------------------------------------------------------------

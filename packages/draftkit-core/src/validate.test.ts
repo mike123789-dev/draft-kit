@@ -1,8 +1,32 @@
 import { describe, expect, it } from "vitest";
 
 import { defaultRegistry } from "./layout";
-import type { DraftNode } from "./types";
+import type { ComponentRegistry, ComponentSpec, DraftNode } from "./types";
 import { validateDraft } from "./validate";
+
+// AC-1: ComponentSpec accepts an optional component field
+describe("ComponentSpec.component field (F-005, AC-1)", () => {
+  it("accepts a registry entry with a component value", () => {
+    const stub = () => null;
+    const spec: ComponentSpec = { name: "Foo", allowedProps: [], component: stub };
+    expect(spec.component).toBe(stub);
+  });
+
+  it("accepts a registry entry without a component value", () => {
+    const spec: ComponentSpec = { name: "Bar", allowedProps: [] };
+    expect(spec.component).toBeUndefined();
+  });
+
+  it("registry entries with component coexist with standard entries", () => {
+    const stub = () => null;
+    const registry: ComponentRegistry = {
+      WithComponent: { name: "WithComponent", allowedProps: [], component: stub },
+      WithoutComponent: { name: "WithoutComponent", allowedProps: [] },
+    };
+    expect(registry["WithComponent"].component).toBe(stub);
+    expect(registry["WithoutComponent"].component).toBeUndefined();
+  });
+});
 
 describe("validateDraft", () => {
   it("accepts nodes that match the registry", () => {

@@ -7,7 +7,7 @@ import {
 } from "@draftkit/core";
 import type { ComponentRegistry, ValidationIssue } from "@draftkit/core";
 
-import { buildScope, renderJSX } from "./jsx-renderer";
+import { buildScopeFromRegistry, renderJSX } from "./jsx-renderer";
 
 const MAX_JSX_SIZE = 50_000;
 
@@ -18,7 +18,6 @@ export type PipelineResult =
 export function validateAndRenderJSX(
   jsxString: string,
   registry: ComponentRegistry,
-  additionalScope?: Record<string, unknown>,
 ): PipelineResult {
   // Pre-checks (size + empty) before touching the parser
   if (jsxString.trim().length === 0) {
@@ -43,5 +42,5 @@ export function validateAndRenderJSX(
   const componentIssues = checkComponentNames(ast, registry);
   if (componentIssues.length > 0) return { ok: false, issues: componentIssues };
 
-  return { ok: true, element: renderJSX(jsxString, buildScope(additionalScope)) };
+  return { ok: true, element: renderJSX(jsxString, buildScopeFromRegistry(registry)) };
 }

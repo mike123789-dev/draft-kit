@@ -25,6 +25,7 @@ export type ComponentSpec = {
   children?: ChildrenConstraints;
   description?: string;
   importPath?: string;
+  component?: unknown;
 };
 
 export type ComponentRegistry = Record<string, ComponentSpec>;

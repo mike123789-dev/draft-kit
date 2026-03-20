@@ -46,7 +46,7 @@ export function validationStatusText(result: PipelineResult | null): string {
 // ---------------------------------------------------------------------------
 
 const PRESETS = [
-  { label: "Mini", prompt: "button" },
+  { label: "Mini", prompt: "simple card" },
   { label: "Small", prompt: "card with title and description" },
   { label: "Medium", prompt: "settings form with multiple fields" },
 ] as const;
@@ -57,11 +57,10 @@ const PRESETS = [
 
 type DraftKitShellProps = {
   registry: ComponentRegistry;
-  components?: Record<string, unknown>;
   onExportPng?: () => void;
 };
 
-export function DraftKitShell({ registry, components, onExportPng }: DraftKitShellProps) {
+export function DraftKitShell({ registry, onExportPng }: DraftKitShellProps) {
   const [pipelineResult, setPipelineResult] = useState<PipelineResult | null>(null);
   const [editorCode, setEditorCode] = useState("");
   const [draft, setDraft] = useState<DraftNode | null>(null);
@@ -72,11 +71,11 @@ export function DraftKitShell({ registry, components, onExportPng }: DraftKitShe
     const jsxCode = serializeDraftToJsxExpression(generated);
     setDraft(generated);
     setEditorCode(jsxCode);
-    setPipelineResult(validateAndRenderJSX(jsxCode, registry, components));
+    setPipelineResult(validateAndRenderJSX(jsxCode, registry));
   }
 
   function handleRun() {
-    setPipelineResult(validateAndRenderJSX(editorCode, registry, components));
+    setPipelineResult(validateAndRenderJSX(editorCode, registry));
   }
 
   async function handleCopyCode() {
@@ -230,6 +229,11 @@ export function DraftKitShell({ registry, components, onExportPng }: DraftKitShe
         .dk-btn:disabled {
           opacity: 0.3;
           cursor: not-allowed;
+        }
+        .dk-btn[data-copied="true"] {
+          border-color: var(--pass);
+          color: var(--pass);
+          background: var(--pass-dim);
         }
         .dk-btn-primary {
           background: var(--accent);
@@ -402,7 +406,7 @@ export function DraftKitShell({ registry, components, onExportPng }: DraftKitShe
           flex: 1;
           overflow: auto;
           padding: 24px;
-          background: white;
+          background: oklch(0.97 0 0);
         }
         .dk-canvas-content::-webkit-scrollbar { width: 4px; }
         .dk-canvas-content::-webkit-scrollbar-track { background: transparent; }

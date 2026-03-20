@@ -1,12 +1,12 @@
 "use client";
 
-import { defaultRegistry } from "@draftkit/core";
+import { defaultRegistry, type ComponentRegistry } from "@draftkit/core";
 import { DraftKitShell } from "@draftkit/react";
 import React from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
@@ -35,25 +35,29 @@ const Text = ({
   </span>
 );
 
-const playgroundComponents: Record<string, unknown> = {
-  Badge,
-  Button,
-  Card,
-  Input,
-  Label,
-  Separator,
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-  Text,
+const playgroundRegistry: ComponentRegistry = {
+  ...defaultRegistry,
+  Badge: { ...defaultRegistry.Badge, component: Badge },
+  Button: { ...defaultRegistry.Button, component: Button },
+  Card: { ...defaultRegistry.Card, component: Card },
+  CardHeader: { name: "CardHeader", allowedProps: [], children: { allowed: true }, component: CardHeader },
+  CardTitle: { name: "CardTitle", allowedProps: [], children: { allowed: true }, component: CardTitle },
+  CardDescription: { name: "CardDescription", allowedProps: [], children: { allowed: true }, component: CardDescription },
+  CardContent: { name: "CardContent", allowedProps: [], children: { allowed: true }, component: CardContent },
+  Input: { ...defaultRegistry.Input, component: Input },
+  Label: { name: "Label", allowedProps: ["htmlFor"], children: { allowed: true }, component: Label },
+  Separator: { name: "Separator", allowedProps: ["orientation"], children: { allowed: false }, component: Separator },
+  Tabs: { name: "Tabs", allowedProps: ["defaultValue"], children: { allowed: true }, component: Tabs },
+  TabsList: { name: "TabsList", allowedProps: [], children: { allowed: true }, component: TabsList },
+  TabsTrigger: { name: "TabsTrigger", allowedProps: ["value"], children: { allowed: true }, component: TabsTrigger },
+  TabsContent: { name: "TabsContent", allowedProps: ["value"], children: { allowed: true }, component: TabsContent },
+  Text: { ...defaultRegistry.Text, component: Text },
 };
 
 export default function Page() {
   return (
     <DraftKitShell
-      registry={defaultRegistry}
-      components={playgroundComponents}
+      registry={playgroundRegistry}
       onExportPng={() => {
         window.alert("PNG export는 다음 단계에서 연결합니다.");
       }}

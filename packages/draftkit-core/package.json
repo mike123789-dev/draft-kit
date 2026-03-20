@@ -9,6 +9,7 @@
     "build": "tsc -p tsconfig.json",
     "lint": "echo 'skip lint for core'",
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "pretest": "find src -name '*.js' -delete; find src -name '*.d.ts' -delete",
     "test": "vitest run"
   },
   "dependencies": {

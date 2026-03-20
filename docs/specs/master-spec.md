@@ -45,35 +45,36 @@ last_updated: "2026-03-20"
 | MS-017 | Registry    | Component registry includes component name, props (from argTypes), default values, description, and import path extracted from Storybook                                                       | P0       | Active  | —        |
 | MS-018 | UI          | DraftKit supports a fullscreen draft canvas mode as an alternative to the default chat+overlay layout                                                                                          | P2       | Planned | —        |
 | MS-019 | Preview     | The playground provides a live editor with a syntax-highlighted JSX editor, Run button, validated react-live preview, and Mini/Small/Medium preset draft buttons replacing the freeform prompt | P0       | Done    | F-003    |
-| MS-020 | Registry    | The render scope is automatically built from the component registry so that any registered component is available in the live preview without manual scope injection in the host application   | P0       | Planned | —        |
+| MS-020 | Registry | The render scope is automatically built from the component registry so that any registered component is available in the live preview without manual scope injection in the host application | P0 | Done | F-005 |
 
 <!-- Priority: P0 = must have, P1 = should have, P2 = nice to have -->
 <!-- Status: Active, Done, Deprecated, Planned -->
 
 ## Define Decision Log
 
-| Date | Request | Decision | MS IDs | Why |
-|------|---------|----------|--------|-----|
-| 2026-01-01 | Initial bootstrap requirement capture | New | MS-001 | Seed first product capability from current project scope |
-| 2026-03-20 | Layout System feature spec | Reuse | MS-009, MS-016 | Both requirements describe the same layout system capability; F-001 implements them together |
-| 2026-03-20 | AST Validation + Restricted Rendering feature spec | Reuse | MS-011, MS-014 | Both requirements describe the validation-to-rendering pipeline; F-002 implements them as one feature |
-| 2026-03-20 | Wire validateAndRenderJSX into playground preview panel | New | MS-019 | Users cannot currently see live JSX validation and react-live rendering in the preview — DraftNode tree renderer is being replaced with the validated react-live engine built in F-002 |
-| 2026-03-20 | Automatic scope binding from component registry | New | MS-020 | Playground currently requires manual components prop injection (page.tsx workaround); registry should drive scope automatically once MS-017 import paths are available — new capability, not a refinement of existing behavior |
+| Date       | Request                                                 | Decision | MS IDs         | Why                                                                                                                                                                                                                            |
+| ---------- | ------------------------------------------------------- | -------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 2026-01-01 | Initial bootstrap requirement capture                   | New      | MS-001         | Seed first product capability from current project scope                                                                                                                                                                       |
+| 2026-03-20 | Layout System feature spec                              | Reuse    | MS-009, MS-016 | Both requirements describe the same layout system capability; F-001 implements them together                                                                                                                                   |
+| 2026-03-20 | AST Validation + Restricted Rendering feature spec      | Reuse    | MS-011, MS-014 | Both requirements describe the validation-to-rendering pipeline; F-002 implements them as one feature                                                                                                                          |
+| 2026-03-20 | Wire validateAndRenderJSX into playground preview panel | New      | MS-019         | Users cannot currently see live JSX validation and react-live rendering in the preview — DraftNode tree renderer is being replaced with the validated react-live engine built in F-002                                         |
+| 2026-03-20 | Automatic scope binding from component registry         | New      | MS-020         | Playground currently requires manual components prop injection (page.tsx workaround); registry should drive scope automatically once MS-017 import paths are available — new capability, not a refinement of existing behavior |
+| 2026-03-20 | Automatic scope binding feature spec | New | MS-020 | Registry entries need a component reference field so buildScopeFromRegistry can derive the react-live scope automatically; eliminates separate components prop on DraftKitShell and the drift risk between registry metadata and actual rendered components |
 
 ## Glossary
 
-| Term | Definition |
-|------|------------|
-| Draft | A tree of DraftNode objects representing a generated UI layout, produced by the generation pipeline |
-| Component Registry | A map of component names to their specs (allowed props, children rules), used for validation and code generation |
-| DraftNode | A single node in the draft tree, containing a component type, props, and optional children |
-| Overlay Preview | A live-rendered preview of a draft using react-live, shown in the playground UI before export |
-| Serialization | Converting a DraftNode tree into copy-pasteable JSX source code |
-| Layout Primitives | Base structural components (e.g., Flex, Grid, Stack) available as building blocks in draft generation |
-| Chat Panel | The right-side UI panel where users input natural language prompts and see generation results |
+| Term               | Definition                                                                                                             |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------- |
+| Draft              | A tree of DraftNode objects representing a generated UI layout, produced by the generation pipeline                    |
+| Component Registry | A map of component names to their specs (allowed props, children rules), used for validation and code generation       |
+| DraftNode          | A single node in the draft tree, containing a component type, props, and optional children                             |
+| Overlay Preview    | A live-rendered preview of a draft using react-live, shown in the playground UI before export                          |
+| Serialization      | Converting a DraftNode tree into copy-pasteable JSX source code                                                        |
+| Layout Primitives  | Base structural components (e.g., Flex, Grid, Stack) available as building blocks in draft generation                  |
+| Chat Panel         | The right-side UI panel where users input natural language prompts and see generation results                          |
 | Scope (react-live) | The set of components and utilities exposed to the react-live renderer; only registry-approved components are included |
-| Host Application | The existing React application on top of which DraftKit runs as an overlay; DraftKit does not modify the host app's UI |
-| AST Validation | Static analysis of generated JSX using @babel/parser to enforce security and registry constraints before rendering |
+| Host Application   | The existing React application on top of which DraftKit runs as an overlay; DraftKit does not modify the host app's UI |
+| AST Validation     | Static analysis of generated JSX using @babel/parser to enforce security and registry constraints before rendering     |
 
 ## Amendment Policy
 
