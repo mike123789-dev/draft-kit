@@ -20,11 +20,52 @@ function basePage(children: DraftNode[]): DraftNode {
   };
 }
 
+function simpleCard(): DraftNode {
+  return {
+    type: "Card",
+    props: {},
+    children: [
+      {
+        type: "CardHeader",
+        props: {},
+        children: [
+          { type: "CardTitle", text: "Card Title" },
+          { type: "CardDescription", text: "A short description of the card." },
+        ],
+      },
+      {
+        type: "CardContent",
+        props: {},
+        children: [
+          { type: "Text", props: { size: "sm", tone: "muted" }, text: "Card content goes here." },
+        ],
+      },
+    ],
+  };
+}
+
 export function createMockDraft(
   prompt: string,
   registry: ComponentRegistry,
 ): DraftNode {
   const lowerPrompt = prompt.toLowerCase();
+
+  if (lowerPrompt === "simple card") {
+    return pruneUnknownComponents(
+      {
+        type: "Page",
+        props: { padding: 24 },
+        children: [
+          {
+            type: "Container",
+            props: { maxWidth: 380, paddingX: 16 },
+            children: [simpleCard()],
+          },
+        ],
+      },
+      registry,
+    );
+  }
 
   const heroChildren: DraftNode[] = [
     { type: "Badge", props: { variant: "secondary" }, text: "DraftKit MVP" },
@@ -43,14 +84,31 @@ export function createMockDraft(
   if (lowerPrompt.includes("form")) {
     heroChildren.push({
       type: "Card",
-      props: {
-        title: "문의 폼",
-        description: "이름과 메시지를 입력하고 제출합니다.",
-      },
+      props: {},
       children: [
-        { type: "Input", props: { placeholder: "이름" } },
-        { type: "Input", props: { placeholder: "메시지" } },
-        { type: "Button", text: "Submit", props: { variant: "default" } },
+        {
+          type: "CardHeader",
+          props: {},
+          children: [
+            { type: "CardTitle", text: "문의 폼" },
+            { type: "CardDescription", text: "이름과 메시지를 입력하고 제출합니다." },
+          ],
+        },
+        {
+          type: "CardContent",
+          props: {},
+          children: [
+            {
+              type: "Stack",
+              props: { gap: 12 },
+              children: [
+                { type: "Input", props: { placeholder: "이름" } },
+                { type: "Input", props: { placeholder: "메시지" } },
+                { type: "Button", text: "Submit", props: { variant: "default" } },
+              ],
+            },
+          ],
+        },
       ],
     });
   } else {

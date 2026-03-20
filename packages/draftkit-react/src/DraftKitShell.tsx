@@ -45,11 +45,27 @@ export function validationStatusText(result: PipelineResult | null): string {
 // Preset definitions
 // ---------------------------------------------------------------------------
 
-const PRESETS = [
+type Preset =
+  | { label: string; prompt: string; code?: never }
+  | { label: string; code: string; prompt?: never };
+
+const SMALL_CARD_CODE = `<div style={{ padding: 24 }}>
+  <div style={{ maxWidth: 360, borderRadius: 12, border: "1px solid #e5e7eb", fontSize: 14, overflow: "hidden" }}>
+    <div style={{ padding: "16px 16px 8px" }}>
+      <div style={{ fontWeight: 600, fontSize: 16, marginBottom: 4 }}>Card Title</div>
+      <div style={{ color: "#6b7280" }}>A short description of the card.</div>
+    </div>
+    <div style={{ padding: "8px 16px 16px", color: "#374151" }}>
+      Card content goes here.
+    </div>
+  </div>
+</div>`;
+
+const PRESETS: Preset[] = [
   { label: "Mini", prompt: "simple card" },
-  { label: "Small", prompt: "card with title and description" },
+  { label: "Small", code: SMALL_CARD_CODE },
   { label: "Medium", prompt: "settings form with multiple fields" },
-] as const;
+];
 
 // ---------------------------------------------------------------------------
 // Shell component
@@ -65,17 +81,24 @@ export function DraftKitShell({ registry, onExportPng }: DraftKitShellProps) {
   const [editorCode, setEditorCode] = useState("");
   const [draft, setDraft] = useState<DraftNode | null>(null);
   const [copied, setCopied] = useState(false);
+  const [validationEnabled, setValidationEnabled] = useState(false);
 
-  function handlePreset(prompt: string) {
-    const generated = createMockDraft(prompt, registry);
+  function handlePreset(preset: Preset) {
+    if (preset.code) {
+      setDraft(null);
+      setEditorCode(preset.code);
+      setPipelineResult(validateAndRenderJSX(preset.code, registry));
+      return;
+    }
+    const generated = createMockDraft(preset.prompt, registry);
     const jsxCode = serializeDraftToJsxExpression(generated);
     setDraft(generated);
     setEditorCode(jsxCode);
-    setPipelineResult(validateAndRenderJSX(jsxCode, registry));
+    setPipelineResult(validateAndRenderJSX(jsxCode, registry, validationEnabled));
   }
 
   function handleRun() {
-    setPipelineResult(validateAndRenderJSX(editorCode, registry));
+    setPipelineResult(validateAndRenderJSX(editorCode, registry, validationEnabled));
   }
 
   async function handleCopyCode() {
@@ -280,6 +303,41 @@ export function DraftKitShell({ registry, onExportPng }: DraftKitShellProps) {
         .dk-validation[data-status="idle"] {
           color: var(--muted);
         }
+        .dk-validation-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 8px;
+          margin-bottom: 8px;
+        }
+        .dk-switch {
+          position: relative;
+          width: 32px;
+          height: 18px;
+          flex-shrink: 0;
+        }
+        .dk-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+        .dk-switch-track {
+          position: absolute;
+          inset: 0;
+          border-radius: 9px;
+          background: var(--border-hi);
+          cursor: pointer;
+          transition: background 0.15s ease;
+        }
+        .dk-switch input:checked + .dk-switch-track { background: var(--accent); }
+        .dk-switch-track::after {
+          content: "";
+          position: absolute;
+          top: 3px;
+          left: 3px;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: var(--text);
+          transition: transform 0.15s ease;
+        }
+        .dk-switch input:checked + .dk-switch-track::after { transform: translateX(14px); }
         .dk-validation-dot {
           width: 6px;
           height: 6px;
@@ -455,14 +513,14 @@ export function DraftKitShell({ registry, onExportPng }: DraftKitShellProps) {
           <div className="dk-section">
             <div className="dk-section-label">Presets</div>
             <div className="dk-presets">
-              {PRESETS.map(({ label, prompt }) => (
+              {PRESETS.map((preset) => (
                 <button
-                  key={label}
+                  key={preset.label}
                   type="button"
                   className="dk-preset"
-                  onClick={() => handlePreset(prompt)}
+                  onClick={() => handlePreset(preset)}
                 >
-                  {label}
+                  {preset.label}
                 </button>
               ))}
             </div>
@@ -497,10 +555,20 @@ export function DraftKitShell({ registry, onExportPng }: DraftKitShellProps) {
 
           {/* Validation */}
           <div className="dk-section">
-            <div className="dk-section-label">Validation</div>
-            <div className="dk-validation" data-status={validStatus}>
+            <div className="dk-validation-row">
+              <div className="dk-section-label" style={{ marginBottom: 0 }}>Validation</div>
+              <label className="dk-switch">
+                <input
+                  type="checkbox"
+                  checked={validationEnabled}
+                  onChange={(e) => setValidationEnabled(e.target.checked)}
+                />
+                <span className="dk-switch-track" />
+              </label>
+            </div>
+            <div className="dk-validation" data-status={validationEnabled ? validStatus : "idle"}>
               <span className="dk-validation-dot" />
-              {validationStatusText(pipelineResult)}
+              {validationEnabled ? validationStatusText(pipelineResult) : "검증 비활성화됨"}
             </div>
           </div>
 
