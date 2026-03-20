@@ -29,6 +29,9 @@ pnpm dev             # playground 앱 실행
 pnpm build           # 워크스페이스 전체 빌드
 pnpm typecheck       # 워크스페이스 전체 타입체크
 pnpm lint            # 워크스페이스 전체 린트
+pnpm --filter @draftkit/playground-next storybook
+pnpm --filter @draftkit/playground-next build-storybook
+pnpm --filter @draftkit/playground-next registry:extract
 ```
 
 ## Current MVP Skeleton

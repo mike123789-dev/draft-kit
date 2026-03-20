@@ -8,9 +8,11 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "lint": "echo 'skip lint for core'",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
   }
 }

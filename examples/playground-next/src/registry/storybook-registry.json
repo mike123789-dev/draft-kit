@@ -1,0 +1,75 @@
+[
+  {
+    "title": "DraftKit/Shell",
+    "componentName": "DraftKitShell",
+    "importPath": "@draftkit/react",
+    "group": "draftkit",
+    "description": "Main runtime shell that composes prompt panel and overlay preview.",
+    "props": [],
+    "source": "example"
+  },
+  {
+    "title": "UI/Badge",
+    "componentName": "Badge",
+    "importPath": "@/components/ui/badge",
+    "group": "ui",
+    "description": "Compact label component for state and metadata.",
+    "props": [
+      "children",
+      "variant"
+    ],
+    "source": "example"
+  },
+  {
+    "title": "UI/Button",
+    "componentName": "Button",
+    "importPath": "@/components/ui/button",
+    "group": "ui",
+    "description": "Primary action button with variant and size tokens.",
+    "props": [
+      "children",
+      "disabled",
+      "onClick",
+      "size",
+      "variant"
+    ],
+    "source": "example"
+  },
+  {
+    "title": "UI/Card",
+    "componentName": "Card",
+    "importPath": "@/components/ui/card",
+    "group": "ui",
+    "description": "Container with semantic header/content/footer slots.",
+    "props": [
+      "size"
+    ],
+    "source": "example"
+  },
+  {
+    "title": "UI/Input",
+    "componentName": "Input",
+    "importPath": "@/components/ui/input",
+    "group": "ui",
+    "description": "Single-line text input.",
+    "props": [
+      "disabled",
+      "placeholder",
+      "type"
+    ],
+    "source": "example"
+  },
+  {
+    "title": "UI/Textarea",
+    "componentName": "Textarea",
+    "importPath": "@/components/ui/textarea",
+    "group": "ui",
+    "description": "Multi-line text input.",
+    "props": [
+      "disabled",
+      "placeholder",
+      "rows"
+    ],
+    "source": "example"
+  }
+]
