@@ -1,7 +1,7 @@
 ---
 doc_type: master-spec
 title: "DraftKit Master Specification"
-last_updated: "2026-03-20"
+last_updated: "2026-03-21"
 ---
 
 # DraftKit Master Specification
@@ -27,9 +27,9 @@ last_updated: "2026-03-20"
 
 | ID     | Area        | Requirement                                                                                                                                                                                    | Priority | Status  | Features |
 | ------ | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------- | -------- |
-| MS-002 | Generation  | Users can enter a text prompt and receive a generated UI draft composed of registry-known components                                                                                           | P0       | Done    | —        |
+| MS-002 | Generation  | Users can enter a text prompt and receive a generated UI draft composed of registry-known components                                                                                           | P0       | Active  | —        |
 | MS-003 | Validation  | Generated drafts are validated against the component registry, surfacing unknown-component and invalid-prop errors                                                                             | P0       | Done    | —        |
-| MS-004 | Preview     | Users can see a live overlay preview of the generated draft rendered with react-live                                                                                                           | P0       | Done    | —        |
+| MS-004 | Preview     | Users can see a live overlay preview of the generated draft rendered with react-live                                                                                                           | P0       | Active  | —        |
 | MS-005 | Export      | Users can copy the serialized JSX code of a validated draft to clipboard                                                                                                                       | P0       | Done    | F-004    |
 | MS-006 | Registry    | A component registry defines available components and their allowed props, sourced from Storybook extraction                                                                                   | P0       | Done    | —        |
 | MS-007 | Export      | Users can export the rendered preview as a PNG image                                                                                                                                           | P1       | Active  | —        |
@@ -39,7 +39,7 @@ last_updated: "2026-03-20"
 | MS-011 | Validation  | Validation enforces: only registry components allowed, only declared props allowed, no imports, no window/document access, no arbitrary JS execution                                           | P0       | Done    | F-002    |
 | MS-012 | Generation  | Users can iteratively refine generated UI through follow-up chat messages without starting over                                                                                                | P0       | Active  | —        |
 | MS-013 | Interaction | Draft previews support basic UI interactions (button clicks, tabs, accordion, dialog) but disallow useState, API calls, and async logic                                                        | P0       | Active  | —        |
-| MS-014 | Rendering   | Rendering engine uses react-live with a restricted scope, allowing only registry-approved components                                                                                           | P0       | Active  | F-002    |
+| MS-014 | Rendering   | Rendering engine uses react-live with a restricted scope, allowing only registry-approved components                                                                                           | P0       | Done    | F-002    |
 | MS-015 | Export      | Code export produces a single-file React component with imports, clean JSX, ready for copy-paste                                                                                               | P0       | Done    | F-004    |
 | MS-016 | Layout      | Layout primitives enforce gap-based spacing, no raw divs, max nesting depth of 3-4 levels, and responsive behavior via primitive props                                                         | P0       | Done    | F-001    |
 | MS-017 | Registry | Component registry includes component name, props (from argTypes), default values, description, and import path extracted from Storybook | P0 | Done | F-006 |
@@ -60,6 +60,7 @@ last_updated: "2026-03-20"
 | 2026-03-20 | Wire validateAndRenderJSX into playground preview panel | New      | MS-019         | Users cannot currently see live JSX validation and react-live rendering in the preview — DraftNode tree renderer is being replaced with the validated react-live engine built in F-002                                         |
 | 2026-03-20 | Automatic scope binding from component registry         | New      | MS-020         | Playground currently requires manual components prop injection (page.tsx workaround); registry should drive scope automatically once MS-017 import paths are available — new capability, not a refinement of existing behavior |
 | 2026-03-20 | Automatic scope binding feature spec | New | MS-020 | Registry entries need a component reference field so buildScopeFromRegistry can derive the react-live scope automatically; eliminates separate components prop on DraftKitShell and the drift risk between registry metadata and actual rendered components |
+| 2026-03-21 | Status audit: align spec with actual implementation | Correction | MS-002, MS-004, MS-014 | MS-002 reverted to Active — createMockDraft() uses hardcoded template matching only, no LLM/AI call exists anywhere in the codebase; MS-004 reverted to Active — react-live rendering works in the standalone playground but the overlay-on-host-app experience is not implemented; MS-014 promoted to Done — F-002 fully implements react-live with restricted scope and registry-based component gating |
 
 ## Glossary
 

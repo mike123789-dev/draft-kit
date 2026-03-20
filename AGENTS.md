@@ -1,3 +1,30 @@
+## Commands
+```bash
+# From repo root — target a specific workspace:
+pnpm --filter @draftkit/core test
+pnpm --filter @draftkit/react typecheck
+pnpm --filter @draftkit/core lint
+pnpm --filter @draftkit/react build
+
+# Run all workspaces:
+pnpm -r test
+pnpm -r typecheck
+pnpm -r lint
+```
+
+## Docs & Spec Structure
+- `docs/specs/master-spec.md`: canonical requirements (MS-xxx IDs). **Do not hand-edit** Requirements, Decision Log, or Glossary — script-managed.
+- `docs/specs/constitution.md`: project principles (TDD, spec-first, monorepo boundaries). Governs all implementation.
+- `docs/specs/features/F-xxx-<name>/`: one directory per feature containing `spec.md`, `plan.md`, task files (`T-xxx.md`).
+- `docs/specs/compound.md`: reusable learnings captured after each feature completes. Append via `spec-compound`.
+- `docs/specs/progress.md` / `progress.json`: auto-generated status board. Do not hand-edit.
+
+## Specflow Workflow
+Feature work follows: `spec-define` → `spec-plan` → `spec-tasks` → `spec-implement` → `spec-verify` → `spec-finish` → `spec-compound`
+- Every feature spec must link to at least one MS-xxx requirement ID.
+- Every task maps to acceptance criteria; every AC maps to a test.
+- `spec-verify` must pass before `spec-finish` runs.
+
 ## Monorepo Boundaries
 - `packages/*` is product code.
 - `examples/*` is example/demo only.

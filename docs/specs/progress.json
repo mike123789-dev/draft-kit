@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-20T07:29:12.830147+00:00",
+  "generated_at": "2026-03-20T09:24:37.749601+00:00",
   "total_features": 6,
   "blocked_tasks": 0,
   "features_with_nc": 0,
@@ -62,7 +62,7 @@
     {
       "featureId": "F-006",
       "title": "Storybook Story Extractor",
-      "status": "Ready",
+      "status": "Done",
       "total": 3,
       "done": 3,
       "inProgress": 0,

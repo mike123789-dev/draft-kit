@@ -87,7 +87,7 @@ export function DraftKitShell({ registry, onExportPng }: DraftKitShellProps) {
     if (preset.code) {
       setDraft(null);
       setEditorCode(preset.code);
-      setPipelineResult(validateAndRenderJSX(preset.code, registry));
+      setPipelineResult(validateAndRenderJSX(preset.code, registry, validationEnabled));
       return;
     }
     const generated = createMockDraft(preset.prompt!, registry);
@@ -259,16 +259,16 @@ export function DraftKitShell({ registry, onExportPng }: DraftKitShellProps) {
           background: var(--pass-dim);
         }
         .dk-btn-primary {
-          background: var(--accent);
-          border-color: var(--accent);
-          color: #0b0b0e;
+          background: #dc2626;
+          border-color: #dc2626;
+          color: #fff;
           font-weight: 700;
           grid-column: span 2;
         }
         .dk-btn-primary:hover:not(:disabled) {
-          background: #f0b030;
-          border-color: #f0b030;
-          box-shadow: 0 0 18px var(--accent-glow);
+          background: #ef4444;
+          border-color: #ef4444;
+          box-shadow: 0 0 18px rgba(220,38,38,0.4);
         }
         .dk-btn-primary:disabled {
           background: var(--surface2);
