@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file:///Users/user/Dev/draft-kit/examples/playground-next/src/app/globals.css"],"sourcesContent":[":root {\n  --background: #f8fafc;\n  --foreground: #0f172a;\n  --border: #dbe1ea;\n}\n\n* {\n  box-sizing: border-box;\n}\n\nhtml,\nbody {\n  width: 100%;\n  min-height: 100%;\n  margin: 0;\n  padding: 0;\n  font-family:\n    ui-sans-serif,\n    system-ui,\n    -apple-system,\n    Segoe UI,\n    Roboto,\n    \"Noto Sans KR\",\n    sans-serif;\n  background: var(--background);\n  color: var(--foreground);\n}\n\nbutton {\n  border: 1px solid #0f172a;\n  border-radius: 8px;\n  padding: 8px 12px;\n  background: #0f172a;\n  color: #ffffff;\n  cursor: pointer;\n}\n\nbutton:disabled {\n  opacity: 0.5;\n  cursor: not-allowed;\n}\n"],"names":[],"mappings":"AAAA;;;;;;AAMA;;;;AAIA;;;;;;;;;;AAkBA;;;;;;;;;AASA"}}]
-}
