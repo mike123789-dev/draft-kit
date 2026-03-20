@@ -249,3 +249,60 @@ DraftKit은 단순한 코드 생성 도구가 아니라,
 
 > “Design System을 기반으로 UI를 조립하고 실시간으로 보여주는 AI Runtime”이다.
 
+---
+
+## 16. Technical Dependencies
+
+### 16.1 Core Runtime (필수)
+
+- react
+- react-dom
+- react-live (live preview rendering)
+- @babel/parser (AST validation)
+
+설명:
+
+- `react-live` 중심으로 실시간 렌더링을 구성한다.
+- validation은 `@babel/parser`로 처리한다.
+
+### 16.2 Validation / Transformation
+
+- @babel/standalone (**optional**)
+
+설명:
+
+- 브라우저 내 변환 파이프라인을 직접 제어해야 할 때만 사용한다.
+- 기본 MVP에서는 필수가 아니다.
+
+### 16.3 UI & Interaction
+
+- @radix-ui/react-dialog (overlay / panel UI)
+- clsx (**optional**, className 조합 유틸)
+
+### 16.4 Styling
+
+- tailwindcss (**optional**, host app 선택사항)
+
+설명:
+
+- DraftKit은 특정 스타일링 프레임워크에 종속되지 않는다.
+- 스타일은 host application의 design system/Tokens를 우선 사용한다.
+- runtime CSS compilation은 요구하지 않는다.
+
+### 16.5 Component Registry
+
+- storybook (component metadata source: argTypes/docs)
+
+설명:
+
+- Storybook은 런타임 엔진이라기보다 메타데이터 소스로 사용한다.
+
+### 16.6 Export
+
+- html2canvas (PNG export)
+
+### 16.7 Notes
+
+- DraftKit does not rely on a specific UI library (e.g., shadcn).
+- DraftKit은 허용된 Registry 컴포넌트만 렌더링한다.
+- Core validation 규칙(import 금지, 임의 JS 실행 금지)은 dependency와 별개로 유지되어야 한다.

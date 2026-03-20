@@ -8,6 +8,8 @@
 - `@draftkit/react`: renderer, overlay UI, chat shell (React-only).
 - `@draftkit/next`: Next.js integration adapters only.
 - `examples/playground-next`: manual QA and development playground only.
+- UI component source-of-truth is `examples/playground-next/src/components`.
+- Do not create a separate package-level UI component library unless explicitly needed later.
 
 ## Dependency Direction (must keep)
 - `core` must not import `next` or app code.
@@ -19,5 +21,6 @@
 - Start feature work in `core` first, then wire in `react`, then verify in `playground`.
 - Keep public package APIs small and explicit from `src/index.ts`.
 - Prefer pure functions and typed contracts in `core`.
+- Build screen-level UI in `examples`, and keep DraftKit engine/runtime logic in `packages`.
 - Always run `lint` and `typecheck` for relevant workspaces before finishing.
 - When feasible, perform browser verification (e.g. with `agent-browser`) for user-visible flows.
