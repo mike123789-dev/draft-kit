@@ -34,6 +34,12 @@ This article enforces the rules defined in `AGENTS.md` at the repository root.
 - UI component source-of-truth is `examples/playground-next/src/components`; do not create a separate package-level UI library unless explicitly decided.
 - Start feature work in `core` first, then wire in `react`, then verify in `playground`.
 
+## Article 6: Test Infrastructure Hygiene
+
+- Every package with a `tsc` build must set `"outDir"` in `tsconfig.json` — compiled artifacts must never land in `src/`.
+- Every package's vitest config must set `resolve.extensions` with `.tsx`/`.ts` before `.js` so source files always win over compiled output.
+- Every package's `package.json` must include a `pretest` script that deletes any `.js` and `.d.ts` files from `src/` before tests run.
+
 ## Amendment Policy
 
 - Changes require owner + reviewer acknowledgement.

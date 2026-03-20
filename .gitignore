@@ -46,3 +46,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Compiled artifacts that must not shadow source files in vitest
+packages/*/src/**/*.js
+packages/*/src/**/*.d.ts

@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm --filter @draftkit/playground-next dev",
+    "dev": "pnpm --filter @draftkit/playground-next dev --turbopack --port 3000",
+    "dev:clean": "lsof -ti:3000,3001 | xargs kill -9 2>/dev/null; pnpm dev",
     "build": "pnpm -r build",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",

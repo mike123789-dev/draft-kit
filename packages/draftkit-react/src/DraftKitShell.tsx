@@ -2,10 +2,13 @@
 
 import {
   createMockDraft,
+  serializeDraftToComponent,
   serializeDraftToJsxExpression,
   type ComponentRegistry,
+  type DraftNode,
 } from "@draftkit/core";
-import { startTransition, useState } from "react";
+import { useState } from "react";
+import { LiveEditor, LiveProvider } from "react-live";
 
 import type { PipelineResult } from "./jsx-pipeline";
 import { validateAndRenderJSX } from "./jsx-pipeline";
@@ -61,14 +64,15 @@ type DraftKitShellProps = {
 export function DraftKitShell({ registry, components, onExportPng }: DraftKitShellProps) {
   const [pipelineResult, setPipelineResult] = useState<PipelineResult | null>(null);
   const [editorCode, setEditorCode] = useState("");
+  const [draft, setDraft] = useState<DraftNode | null>(null);
+  const [copied, setCopied] = useState(false);
 
   function handlePreset(prompt: string) {
-    startTransition(() => {
-      const draft = createMockDraft(prompt, registry);
-      const jsxCode = serializeDraftToJsxExpression(draft);
-      setEditorCode(jsxCode);
-      setPipelineResult(validateAndRenderJSX(jsxCode, registry, components));
-    });
+    const generated = createMockDraft(prompt, registry);
+    const jsxCode = serializeDraftToJsxExpression(generated);
+    setDraft(generated);
+    setEditorCode(jsxCode);
+    setPipelineResult(validateAndRenderJSX(jsxCode, registry, components));
   }
 
   function handleRun() {
@@ -76,8 +80,17 @@ export function DraftKitShell({ registry, components, onExportPng }: DraftKitShe
   }
 
   async function handleCopyCode() {
-    if (!editorCode) return;
-    await navigator.clipboard.writeText(editorCode);
+    const text = draft
+      ? serializeDraftToComponent(draft, registry)
+      : editorCode;
+    if (!text) return;
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      // clipboard permission denied or unavailable — silently ignore
+    }
   }
 
   const validStatus = pipelineResult === null ? "idle" : pipelineResult.ok ? "pass" : "fail";
@@ -467,9 +480,10 @@ export function DraftKitShell({ registry, components, onExportPng }: DraftKitShe
                 type="button"
                 className="dk-btn"
                 onClick={handleCopyCode}
-                disabled={!editorCode}
+                disabled={!draft && !editorCode}
+                data-copied={copied}
               >
-                ⎘ Copy JSX
+                {copied ? "✓ Copied!" : "⎘ Copy JSX"}
               </button>
               <button type="button" className="dk-btn" onClick={onExportPng}>
                 ↗ Export PNG
@@ -486,7 +500,7 @@ export function DraftKitShell({ registry, components, onExportPng }: DraftKitShe
             </div>
           </div>
 
-          {/* JSX source */}
+          {/* JSX source — LiveEditor (AC-5/AC-6) */}
           <div className="dk-code-wrap">
             <div className="dk-code-header">
               <span className="dk-code-dot" style={{ background: "#ff5f57" }} />
@@ -494,15 +508,12 @@ export function DraftKitShell({ registry, components, onExportPng }: DraftKitShe
               <span className="dk-code-dot" style={{ background: "#28c840" }} />
               <span className="dk-code-filename">output.jsx</span>
             </div>
-            <pre className="dk-code">
-              {editorCode ? (
-                editorCode
-              ) : (
-                <span className="dk-code-empty">
-                  {"// select a preset to generate JSX"}
-                </span>
-              )}
-            </pre>
+            <LiveProvider code={editorCode} language="jsx">
+              <LiveEditor
+                className="dk-code"
+                onChange={(code) => { setEditorCode(code); setDraft(null); }}
+              />
+            </LiveProvider>
           </div>
         </aside>
 

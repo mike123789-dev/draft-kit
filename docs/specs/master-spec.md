@@ -25,25 +25,27 @@ last_updated: "2026-03-20"
 
 ## Requirements
 
-| ID | Area | Requirement | Priority | Status | Features |
-|----|------|-------------|----------|--------|----------|
-| MS-002 | Generation | Users can enter a text prompt and receive a generated UI draft composed of registry-known components | P0 | Done | — |
-| MS-003 | Validation | Generated drafts are validated against the component registry, surfacing unknown-component and invalid-prop errors | P0 | Done | — |
-| MS-004 | Preview | Users can see a live overlay preview of the generated draft rendered with react-live | P0 | Done | — |
-| MS-005 | Export | Users can copy the serialized JSX code of a validated draft to clipboard | P0 | Done | — |
-| MS-006 | Registry | A component registry defines available components and their allowed props, sourced from Storybook extraction | P0 | Done | — |
-| MS-007 | Export | Users can export the rendered preview as a PNG image | P1 | Active | — |
-| MS-008 | UI | Users interact with DraftKit through a chat panel (right side) to input natural language UI requests and receive generated results | P0 | Active | — |
-| MS-009 | Layout | DraftKit provides a built-in layout system with primitives (Page, Section, Container, Stack, Inline, Grid, Spacer, Divider) that must be used instead of raw div elements | P0 | Active | — |
-| MS-010 | Preview | Generated UI is displayed as an overlay on top of the host application, not replacing existing UI | P0 | Active | — |
-| MS-011 | Validation | Validation enforces: only registry components allowed, only declared props allowed, no imports, no window/document access, no arbitrary JS execution | P0 | Active | — |
-| MS-012 | Generation | Users can iteratively refine generated UI through follow-up chat messages without starting over | P0 | Active | — |
-| MS-013 | Interaction | Draft previews support basic UI interactions (button clicks, tabs, accordion, dialog) but disallow useState, API calls, and async logic | P0 | Active | — |
-| MS-014 | Rendering | Rendering engine uses react-live with a restricted scope, allowing only registry-approved components | P0 | Active | — |
-| MS-015 | Export | Code export produces a single-file React component with imports, clean JSX, ready for copy-paste | P0 | Active | — |
-| MS-016 | Layout | Layout primitives enforce gap-based spacing, no raw divs, max nesting depth of 3-4 levels, and responsive behavior via primitive props | P0 | Active | — |
-| MS-017 | Registry | Component registry includes component name, props (from argTypes), default values, description, and import path extracted from Storybook | P0 | Active | — |
-| MS-018 | UI | DraftKit supports a fullscreen draft canvas mode as an alternative to the default chat+overlay layout | P2 | Planned | — |
+| ID     | Area        | Requirement                                                                                                                                                                                    | Priority | Status  | Features |
+| ------ | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------- | -------- |
+| MS-002 | Generation  | Users can enter a text prompt and receive a generated UI draft composed of registry-known components                                                                                           | P0       | Done    | —        |
+| MS-003 | Validation  | Generated drafts are validated against the component registry, surfacing unknown-component and invalid-prop errors                                                                             | P0       | Done    | —        |
+| MS-004 | Preview     | Users can see a live overlay preview of the generated draft rendered with react-live                                                                                                           | P0       | Done    | —        |
+| MS-005 | Export      | Users can copy the serialized JSX code of a validated draft to clipboard                                                                                                                       | P0       | Done    | F-004    |
+| MS-006 | Registry    | A component registry defines available components and their allowed props, sourced from Storybook extraction                                                                                   | P0       | Done    | —        |
+| MS-007 | Export      | Users can export the rendered preview as a PNG image                                                                                                                                           | P1       | Active  | —        |
+| MS-008 | UI          | Users interact with DraftKit through a chat panel (right side) to input natural language UI requests and receive generated results                                                             | P0       | Active  | —        |
+| MS-009 | Layout      | DraftKit provides a built-in layout system with primitives (Page, Section, Container, Stack, Inline, Grid, Spacer, Divider) that must be used instead of raw div elements                      | P0       | Done    | F-001    |
+| MS-010 | Preview     | Generated UI is displayed as an overlay on top of the host application, not replacing existing UI                                                                                              | P0       | Active  | —        |
+| MS-011 | Validation  | Validation enforces: only registry components allowed, only declared props allowed, no imports, no window/document access, no arbitrary JS execution                                           | P0       | Done    | F-002    |
+| MS-012 | Generation  | Users can iteratively refine generated UI through follow-up chat messages without starting over                                                                                                | P0       | Active  | —        |
+| MS-013 | Interaction | Draft previews support basic UI interactions (button clicks, tabs, accordion, dialog) but disallow useState, API calls, and async logic                                                        | P0       | Active  | —        |
+| MS-014 | Rendering   | Rendering engine uses react-live with a restricted scope, allowing only registry-approved components                                                                                           | P0       | Active  | F-002    |
+| MS-015 | Export      | Code export produces a single-file React component with imports, clean JSX, ready for copy-paste                                                                                               | P0       | Done    | F-004    |
+| MS-016 | Layout      | Layout primitives enforce gap-based spacing, no raw divs, max nesting depth of 3-4 levels, and responsive behavior via primitive props                                                         | P0       | Done    | F-001    |
+| MS-017 | Registry    | Component registry includes component name, props (from argTypes), default values, description, and import path extracted from Storybook                                                       | P0       | Active  | —        |
+| MS-018 | UI          | DraftKit supports a fullscreen draft canvas mode as an alternative to the default chat+overlay layout                                                                                          | P2       | Planned | —        |
+| MS-019 | Preview     | The playground provides a live editor with a syntax-highlighted JSX editor, Run button, validated react-live preview, and Mini/Small/Medium preset draft buttons replacing the freeform prompt | P0       | Done    | F-003    |
+| MS-020 | Registry    | The render scope is automatically built from the component registry so that any registered component is available in the live preview without manual scope injection in the host application   | P0       | Planned | —        |
 
 <!-- Priority: P0 = must have, P1 = should have, P2 = nice to have -->
 <!-- Status: Active, Done, Deprecated, Planned -->
@@ -53,6 +55,10 @@ last_updated: "2026-03-20"
 | Date | Request | Decision | MS IDs | Why |
 |------|---------|----------|--------|-----|
 | 2026-01-01 | Initial bootstrap requirement capture | New | MS-001 | Seed first product capability from current project scope |
+| 2026-03-20 | Layout System feature spec | Reuse | MS-009, MS-016 | Both requirements describe the same layout system capability; F-001 implements them together |
+| 2026-03-20 | AST Validation + Restricted Rendering feature spec | Reuse | MS-011, MS-014 | Both requirements describe the validation-to-rendering pipeline; F-002 implements them as one feature |
+| 2026-03-20 | Wire validateAndRenderJSX into playground preview panel | New | MS-019 | Users cannot currently see live JSX validation and react-live rendering in the preview — DraftNode tree renderer is being replaced with the validated react-live engine built in F-002 |
+| 2026-03-20 | Automatic scope binding from component registry | New | MS-020 | Playground currently requires manual components prop injection (page.tsx workaround); registry should drive scope automatically once MS-017 import paths are available — new capability, not a refinement of existing behavior |
 
 ## Glossary
 

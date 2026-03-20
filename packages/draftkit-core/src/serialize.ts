@@ -1,4 +1,4 @@
-import type { DraftNode } from "./types";
+import type { ComponentRegistry, DraftNode } from "./types";
 
 function toPropsString(props: DraftNode["props"]): string {
   if (!props) return "";
@@ -43,4 +43,39 @@ export function serializeDraftToJsx(node: DraftNode): string {
     "  );",
     "}",
   ].join("\n");
+}
+
+/** Returns bare JSX expression (no function wrapper) — use for live preview pipelines. */
+export function serializeDraftToJsxExpression(node: DraftNode): string {
+  return toJsx(node, 0);
+}
+
+function collectComponentTypes(node: DraftNode): string[] {
+  const types = new Set<string>();
+  function walk(n: DraftNode) {
+    types.add(n.type);
+    n.children?.forEach(walk);
+  }
+  walk(node);
+  return [...types];
+}
+
+/** Returns a complete single-file React component with import statements derived from the registry. */
+export function serializeDraftToComponent(node: DraftNode, registry: ComponentRegistry): string {
+  const types = collectComponentTypes(node);
+  const byPath = new Map<string, string[]>();
+  for (const type of types) {
+    const spec = registry[type];
+    if (spec?.importPath) {
+      const group = byPath.get(spec.importPath) ?? [];
+      group.push(type);
+      byPath.set(spec.importPath, group);
+    }
+  }
+  const lines: string[] = ['import React from "react";'];
+  for (const [path, names] of [...byPath.entries()].sort()) {
+    lines.push(`import { ${names.sort().join(", ")} } from "${path}";`);
+  }
+  lines.push("", serializeDraftToJsx(node));
+  return lines.join("\n");
 }
