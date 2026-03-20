@@ -90,7 +90,7 @@ export function DraftKitShell({ registry, onExportPng }: DraftKitShellProps) {
       setPipelineResult(validateAndRenderJSX(preset.code, registry));
       return;
     }
-    const generated = createMockDraft(preset.prompt, registry);
+    const generated = createMockDraft(preset.prompt!, registry);
     const jsxCode = serializeDraftToJsxExpression(generated);
     setDraft(generated);
     setEditorCode(jsxCode);

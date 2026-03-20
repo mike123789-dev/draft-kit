@@ -13,6 +13,8 @@ last_updated: "2026-03-20"
 | F-002 | AST Validation and Restricted Rendering Engine | Done | 5/5 (100%) | 0 | 2026-03-20 |
 | F-003 | Playground Live Editor | Done | 3/3 (100%) | 0 | 2026-03-20 |
 | F-004 | Export: Copy JSX + Single-File Component | Done | 4/4 (100%) | 0 | 2026-03-20 |
+| F-005 | Automatic Scope Binding from Component Registry | Done | 4/4 (100%) | 0 | 2026-03-20 |
+| F-006 | Storybook Story Extractor | Ready | 3/3 (100%) | 0 | 2026-03-20 |
 
 ## Blocked Tasks
 
