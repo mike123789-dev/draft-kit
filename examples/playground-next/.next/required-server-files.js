@@ -313,8 +313,8 @@ self.__SERVER_FILES_MANIFEST={
     },
     "distDirRoot": ".next"
   },
-  "appDir": "/Users/user/Dev/draft-kit/apps/playground-next",
-  "relativeAppDir": "draft-kit/apps/playground-next",
+  "appDir": "/Users/user/Dev/draft-kit/examples/playground-next",
+  "relativeAppDir": "draft-kit/examples/playground-next",
   "files": [
     ".next/routes-manifest.json",
     ".next/server/pages-manifest.json",
